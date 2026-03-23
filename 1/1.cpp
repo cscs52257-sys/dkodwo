@@ -12,7 +12,7 @@ void prntm(int matrix[7][7], int rows, int cols) {
 }
 int main() {
     setlocale(LC_ALL, "ru");
-    cout << "1) \n";
+
     const int ROWS = 7;
     const int COLS = 7;
     int matrix[ROWS][COLS] = {
@@ -25,15 +25,13 @@ int main() {
         {7, -3, 0, -6, 4, -1, 5}
     };
 
+    cout << "1) \n";
     cout << "Исходная матрица:" << endl;
     prntm(matrix, ROWS, COLS);
 
     int K;
     cout << "Введите номер строки K (из первого столбца) для сортировки: ";
-    if (!(cin >> K)) {
-        cout << "Ошибка ввода числа" << endl;
-        return -1;
-    }
+    if (!(cin >> K)) return -1;
 
     int Row_id = -1;
     for (int i = 0; i < ROWS; i++) {
@@ -53,8 +51,7 @@ int main() {
         return -1;
     }
 
-    // Сортировка столбцов (начиная со 2-го, индекс 1) по элементам строки Row_id
-    for (int i = 0; i < COLS - 1; i++) {
+    for (int i = 0; i < COLS - 2; i++) {
         for (int j = 1; j < COLS - 1 - i; j++) {
             if (matrix[Row_id][j] > matrix[Row_id][j + 1]) {
                 for (int r = 0; r < ROWS; r++) {
@@ -72,17 +69,17 @@ int main() {
     cout << "\n2) \n";
     int N;
     cout << "Введите длину слов N: ";
-    if (!(cin >> N)) {
-        cout << "Ошибка: введите целое число" << endl;
-        return -1;
-    }
+    if (!(cin >> N)) return -1;
+
     cin.ignore(1000, '\n');
     cout << "Введите строку: ";
     string s;
     getline(cin, s);
+
     int count = 0;
     int wordLen = 0;
     string S = s + " ";
+
     for (int i = 0; i < S.length(); i++) {
         if (S[i] != ' ' && S[i] != ',' && S[i] != '.' && S[i] != '!' && S[i] != '?') {
             wordLen++;
@@ -96,6 +93,10 @@ int main() {
             }
         }
     }
+    cout << "Количество слов с длиной не равной " << N << ": " << count << endl;
+
+    return 0;
+}
     cout << "Количество слов с длиной не равной " << N << ": " << count << endl;
 
     return 0;
