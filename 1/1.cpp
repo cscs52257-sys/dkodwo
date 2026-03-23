@@ -11,8 +11,8 @@ void prntm(int matrix[7][7], int rows, int cols) {
     }
 }
 int main() {
-    cout << "1) \n";
     setlocale(LC_ALL, "ru");
+    cout << "1) \n";
     const int ROWS = 7;
     const int COLS = 7;
     int matrix[ROWS][COLS] = {
@@ -25,12 +25,16 @@ int main() {
         {7, -3, 0, -6, 4, -1, 5}
     };
 
-    int K;
     cout << "Исходная матрица:" << endl;
     prntm(matrix, ROWS, COLS);
 
+    int K;
     cout << "Введите номер строки K (из первого столбца) для сортировки: ";
-    cin >> K;
+    if (!(cin >> K)) {
+        cout << "Ошибка ввода числа" << endl;
+        return -1;
+    }
+
     int Row_id = -1;
     for (int i = 0; i < ROWS; i++) {
         if (matrix[i][0] == K) {
@@ -41,7 +45,7 @@ int main() {
 
     try {
         if (Row_id == -1) {
-            throw runtime_error("Ошибка: Cтрока с таким номером не найдена в первом столбце");
+            throw runtime_error("Ошибка: Строка с таким номером не найдена");
         }
     }
     catch (const runtime_error& err) {
@@ -49,8 +53,9 @@ int main() {
         return -1;
     }
 
-    for (int i = 1; i < COLS - 1; i++) {
-        for (int j = 1; j < COLS - i; j++) {
+    // Сортировка столбцов (начиная со 2-го, индекс 1) по элементам строки Row_id
+    for (int i = 0; i < COLS - 1; i++) {
+        for (int j = 1; j < COLS - 1 - i; j++) {
             if (matrix[Row_id][j] > matrix[Row_id][j + 1]) {
                 for (int r = 0; r < ROWS; r++) {
                     int temp = matrix[r][j];
@@ -60,25 +65,26 @@ int main() {
             }
         }
     }
+
     cout << "Матрица после сортировки по строке K = " << K << ":" << endl;
     prntm(matrix, ROWS, COLS);
 
-    cout << "2) \n";
+    cout << "\n2) \n";
     int N;
-    string s;
     cout << "Введите длину слов N: ";
     if (!(cin >> N)) {
         cout << "Ошибка: введите целое число" << endl;
         return -1;
     }
     cin.ignore(1000, '\n');
-    cout << "Введите строку (любые слова через пробел): ";
+    cout << "Введите строку: ";
+    string s;
     getline(cin, s);
     int count = 0;
     int wordLen = 0;
     string S = s + " ";
     for (int i = 0; i < S.length(); i++) {
-        if (S[i] != ' ' && S[i] != ',' && S[i] != '.' && S[i] != '!') {
+        if (S[i] != ' ' && S[i] != ',' && S[i] != '.' && S[i] != '!' && S[i] != '?') {
             wordLen++;
         }
         else {
@@ -93,10 +99,4 @@ int main() {
     cout << "Количество слов с длиной не равной " << N << ": " << count << endl;
 
     return 0;
-}
-
-    cout << "Количество слов с длиной не равной " << N << ": " << count << endl;
-
-    return 0;
-}
 }
