@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 using namespace std;
 void prntm(int matrix[7][7], int rows, int cols) {
@@ -11,9 +11,6 @@ void prntm(int matrix[7][7], int rows, int cols) {
     }
 }
 int main() {
-    //Дан двумерный массив.В первом столбце массива указаны номера строк.
-    //Вводится значение K – номер строки матрицы.
-    //Упорядочить элементы матрицы в соответствии с порядком в K строке.
     cout << "1) \n";
     setlocale(LC_ALL, "ru");
     const int ROWS = 7;
@@ -65,5 +62,41 @@ int main() {
     }
     cout << "Матрица после сортировки по строке K = " << K << ":" << endl;
     prntm(matrix, ROWS, COLS);
-    //return 0;
+
+    cout << "2) \n";
+    int N;
+    string s;
+    cout << "Введите длину слов N: ";
+    if (!(cin >> N)) {
+        cout << "Ошибка: введите целое число" << endl;
+        return -1;
+    }
+    cin.ignore(1000, '\n');
+    cout << "Введите строку (любые слова через пробел): ";
+    getline(cin, s);
+    int count = 0;
+    int wordLen = 0;
+    string S = s + " ";
+    for (int i = 0; i < S.length(); i++) {
+        if (S[i] != ' ' && S[i] != ',' && S[i] != '.' && S[i] != '!') {
+            wordLen++;
+        }
+        else {
+            if (wordLen > 0) {
+                if (wordLen != N) {
+                    count++;
+                }
+                wordLen = 0;
+            }
+        }
+    }
+    cout << "Количество слов с длиной не равной " << N << ": " << count << endl;
+
+    return 0;
+}
+
+    cout << "Количество слов с длиной не равной " << N << ": " << count << endl;
+
+    return 0;
+}
 }
